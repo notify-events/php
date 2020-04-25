@@ -1,0 +1,27 @@
+{
+    "name": "notify-events/php-send",
+    "description": "Send message to notify.events service",
+    "keywords": ["send"],
+    "homepage": "https://github.com/notify-events/php-send",
+    "type": "extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleg Matrozov",
+            "email": "o.matrozov@notify.events"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/notify-events/php-send/issues",
+        "source": "https://github.com/notify-events/php-send"
+    },
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "notify_events\\php_send\\": "src"
+        }
+    }
+}
