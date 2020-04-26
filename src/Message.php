@@ -64,7 +64,7 @@ class Message
     /**
      * @param string $boundary
      * @param string $name
-     * @param string $value
+     * @param string $content
      * @return string
      */
     protected static function prepareParam($boundary, $name, $content)
@@ -123,19 +123,8 @@ class Message
      * @param string[] $headers
      * @return string
      */
-    protected static function prepareBoundaryPart($boundary, $content, $headers, $transfer = null)
+    protected static function prepareBoundaryPart($boundary, $content, $headers)
     {
-        switch ($transfer) {
-            case 'base64': {
-                $headers['Content-Transfer-Encoding'] = 'base64';
-
-                $content = base64_encode($content);
-            } break;
-            default: {
-                $content = rawurlencode($content);
-            } break;
-        }
-
         $headers['Content-Length'] = strlen($content);
 
         $result = '--' . $boundary . PHP_EOL;
@@ -145,7 +134,7 @@ class Message
         }
 
         $result .= PHP_EOL;
-        $result .= chunk_split($content);
+        $result .= $content . PHP_EOL;
 
         return $result;
     }
@@ -163,7 +152,10 @@ class Message
 
         $content = '';
 
-        $content .= self::prepareParam($boundary, 'title', $this->_title);
+        if (!empty($this->_title)) {
+            $content .= self::prepareParam($boundary, 'title', $this->_title);
+        }
+
         $content .= self::prepareParam($boundary, 'content', $this->_content);
         $content .= self::prepareParam($boundary, 'priority', $this->_priority);
         $content .= self::prepareParam($boundary, 'level', $this->_level);
@@ -171,7 +163,7 @@ class Message
         $content .= self::boundaryFiles($boundary, 'files', $this->_files);
         $content .= self::boundaryFiles($boundary, 'images', $this->_images);
 
-        $content .= '--' . $boundary . '--' . PHP_EOL;
+        $content .= '--' . $boundary . '--';
 
         $context = stream_context_create([
             'http' => [
@@ -183,7 +175,7 @@ class Message
             ],
         ]);
 
-        $response = file_get_contents($url, false, $context);
+        file_get_contents($url, false, $context);
     }
 
     /**
@@ -198,6 +190,14 @@ class Message
     }
 
     /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
      * @param string $content
      * @return $this
      */
@@ -206,6 +206,14 @@ class Message
         $this->_content = $content;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->_content;
     }
 
     /**
@@ -230,6 +238,14 @@ class Message
     }
 
     /**
+     * @return string
+     */
+    public function getPriority()
+    {
+        return $this->_priority;
+    }
+
+    /**
      * @param string $level
      * @return $this
      */
@@ -249,6 +265,14 @@ class Message
         $this->_level = $level;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLevel()
+    {
+        return $this->_level;
     }
 
     /**
