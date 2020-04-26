@@ -25,8 +25,7 @@ class Message
     const LEVEL_SUCCESS = 'success';
 
     /** @var string */
-    //protected static $_baseUrl = 'https://notify.events/api/v1/channel/source/%s/execute';
-    protected static $_baseUrl = 'https://notify.events.local/api/v1/channel/source/%s/execute';
+    protected static $_baseUrl = 'https://notify.events/api/v1/channel/source/%s/execute';
 
     /** @var string */
     protected $_title;
@@ -185,8 +184,6 @@ class Message
         ]);
 
         $response = file_get_contents($url, false, $context);
-
-        var_dump($response);
     }
 
     /**
