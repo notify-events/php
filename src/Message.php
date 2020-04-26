@@ -2,7 +2,7 @@
 
 namespace notify_events\php_send;
 
-use GuzzleHttp\Client;
+use ErrorException;
 use InvalidArgumentException;
 
 /**
@@ -25,10 +25,8 @@ class Message
     const LEVEL_SUCCESS = 'success';
 
     /** @var string */
-    protected static $_baseUrl = 'https://notify.events/api/v1/channel/source/%s/execute';
-
-    /** @var Client */
-    protected static $_client;
+    //protected static $_baseUrl = 'https://notify.events/api/v1/channel/source/%s/execute';
+    protected static $_baseUrl = 'https://notify.events.local/api/v1/channel/source/%s/execute';
 
     /** @var string */
     protected $_title;
@@ -39,20 +37,14 @@ class Message
     /** @var string */
     protected $_level;
 
+    CONST FILE_TYPE_FILE    = 'file';
+    CONST FILE_TYPE_CONTENT = 'content';
+    CONST FILE_TYPE_URL     = 'url';
+
     /** @var array */
     protected $_files = [];
-
-    /**
-     * @return Client
-     */
-    protected static function getClient()
-    {
-        if (static::$_client) {
-            static::$_client = new Client();
-        }
-
-        return static::$_client;
-    }
+    /** @var array */
+    protected $_images = [];
 
     /**
      * Message constructor.
@@ -68,6 +60,133 @@ class Message
             ->setContent($content)
             ->setPriority($priority)
             ->setLevel($level);
+    }
+
+    /**
+     * @param string $boundary
+     * @param string $name
+     * @param string $value
+     * @return string
+     */
+    protected static function prepareParam($boundary, $name, $content)
+    {
+        return self::prepareBoundaryPart($boundary, $content, [
+            'Content-Disposition' => 'form-data; name="' . $name . '"',
+            'Content-Type'        => 'text/plain; charset=utf-8',
+        ]);
+    }
+
+    /**
+     * @param string $boundary
+     * @param string $name
+     * @param array $files
+     * @return string
+     * @throws ErrorException
+     */
+    protected static function boundaryFiles($boundary, $name, $files)
+    {
+        $result = '';
+
+        foreach ($files as $idx => $file) {
+            switch ($file['type']) {
+                case self::FILE_TYPE_FILE: {
+                    $content  = file_get_contents($file['fileName']);
+                    $fileName = basename($file['fileName']);
+                    $mimeType = !empty($file['mimeType']) ? $file['mimeType'] : mime_content_type($file['fileName']);
+                } break;
+                case self::FILE_TYPE_CONTENT: {
+                    $content  = $file['content'];
+                    $fileName = !empty($file['fileName']) ? $file['fileName'] : 'file.dat';
+                    $mimeType = !empty($file['mimeType']) ? $file['mimeType'] : 'application/octet-stream';
+                } break;
+                case self::FILE_TYPE_URL: {
+                    $content  = file_get_contents($file['url']);
+                    $fileName = !empty($file['fileName']) ? $file['fileName'] : basename($file['url']);
+                    $mimeType = !empty($file['mimeType']) ? $file['mimeType'] : 'application/octet-stream';
+                } break;
+                default: {
+                    throw new ErrorException('Unknown file type');
+                }
+            }
+
+            $result .= self::prepareBoundaryPart($boundary, $content, [
+                'Content-Disposition' => 'form-data; name="' . $name . '[' . $idx . ']"; filename="' . $fileName . '"',
+                'Content-Type'        => $mimeType,
+            ]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $boundary
+     * @param string $content
+     * @param string[] $headers
+     * @return string
+     */
+    protected static function prepareBoundaryPart($boundary, $content, $headers, $transfer = null)
+    {
+        switch ($transfer) {
+            case 'base64': {
+                $headers['Content-Transfer-Encoding'] = 'base64';
+
+                $content = base64_encode($content);
+            } break;
+            default: {
+                $content = rawurlencode($content);
+            } break;
+        }
+
+        $headers['Content-Length'] = strlen($content);
+
+        $result = '--' . $boundary . PHP_EOL;
+
+        foreach ($headers as $key => $value) {
+            $result .= $key . ': ' . $value . PHP_EOL;
+        }
+
+        $result .= PHP_EOL;
+        $result .= chunk_split($content);
+
+        return $result;
+    }
+
+    /**
+     * @param string $channelToken
+     * @return void
+     * @throws ErrorException
+     */
+    public function send($channelToken)
+    {
+        $url = sprintf(self::$_baseUrl, $channelToken);
+
+        $boundary = uniqid();
+
+        $content = '';
+
+        $content .= self::prepareParam($boundary, 'title', $this->_title);
+        $content .= self::prepareParam($boundary, 'content', $this->_content);
+        $content .= self::prepareParam($boundary, 'priority', $this->_priority);
+        $content .= self::prepareParam($boundary, 'level', $this->_level);
+
+        $content .= self::boundaryFiles($boundary, 'files', $this->_files);
+        $content .= self::boundaryFiles($boundary, 'images', $this->_images);
+
+        $content .= '--' . $boundary . '--' . PHP_EOL;
+
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' =>
+                    'Content-Type: multipart/form-data; boundary="' . $boundary . '"' . PHP_EOL .
+                    'Content-Length: ' . strlen($content) . PHP_EOL,
+                'content' => $content,
+            ],
+        ]);
+
+        $response = file_get_contents($url, false, $context);
+
+        var_dump($response);
     }
 
     /**
@@ -142,15 +261,10 @@ class Message
      */
     public function addFile($fileName, $mimeType = null)
     {
-        $f = fopen($fileName, 'r');
-
         $this->_files[] = [
-            'name'     => 'files[]',
-            'contents' => $f,
-            'filename' => basename($fileName),
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+            'type'     => self::FILE_TYPE_FILE,
+            'fileName' => basename($fileName),
+            'mimeType' => $mimeType,
         ];
 
         return $this;
@@ -165,12 +279,10 @@ class Message
     public function addFileFromContent($content, $fileName = null, $mimeType = null)
     {
         $this->_files[] = [
-            'name'     => 'files[]',
-            'contents' => $content,
-            'filename' => $fileName,
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+            'type'     => self::FILE_TYPE_CONTENT,
+            'content'  => $content,
+            'fileName' => $fileName,
+            'mimeType' => $mimeType,
         ];
 
         return $this;
@@ -185,12 +297,10 @@ class Message
     public function addFileFromUrl($url, $fileName = null, $mimeType = null)
     {
         $this->_files[] = [
-            'name'     => 'files[]',
-            'contents' => file_get_contents($url),
-            'filename' => $fileName ? $fileName : null,
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+            'type'     => self::FILE_TYPE_URL,
+            'url'      => $url,
+            'fileName' => $fileName,
+            'mimeType' => $mimeType,
         ];
 
         return $this;
@@ -203,15 +313,10 @@ class Message
      */
     public function addImage($fileName, $mimeType = null)
     {
-        $f = fopen($fileName, 'r');
-
-        $this->_files[] = [
-            'name'     => 'images[]',
-            'contents' => $f,
-            'filename' => basename($fileName),
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+        $this->_images[] = [
+            'type'     => self::FILE_TYPE_FILE,
+            'fileName' => basename($fileName),
+            'mimeType' => $mimeType,
         ];
 
         return $this;
@@ -225,13 +330,11 @@ class Message
      */
     public function addImageFromContent($content, $fileName = null, $mimeType = null)
     {
-        $this->_files[] = [
-            'name'     => 'images[]',
-            'contents' => $content,
-            'filename' => $fileName,
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+        $this->_images[] = [
+            'type'     => self::FILE_TYPE_CONTENT,
+            'content'  => $content,
+            'fileName' => $fileName,
+            'mimeType' => $mimeType,
         ];
 
         return $this;
@@ -245,49 +348,13 @@ class Message
      */
     public function addImageFromUrl($url, $fileName = null, $mimeType = null)
     {
-        $this->_files[] = [
-            'name'     => 'images[]',
-            'contents' => file_get_contents($url),
-            'filename' => $fileName ? $fileName : null,
-            'headers'  => [
-                'content-type' => $mimeType ? $mimeType : 'application/octet-stream',
-            ],
+        $this->_images[] = [
+            'type'     => self::FILE_TYPE_URL,
+            'url'      => $url,
+            'fileName' => $fileName,
+            'mimeType' => $mimeType,
         ];
 
         return $this;
-    }
-
-    /**
-     * @param string $channelToken
-     * @return bool
-     */
-    public function send($channelToken)
-    {
-        $url = sprintf(self::$_baseUrl, $channelToken);
-
-        $data = [
-            'title'    => $this->_title,
-            'content'  => $this->_content,
-            'priority' => $this->_priority,
-            'level'    => $this->_level,
-        ];
-
-        $multipart = [];
-
-        $multipart[] = [
-            'name'     => 'data',
-            'contents' => json_encode($data, JSON_UNESCAPED_UNICODE),
-            'headers'  => [
-                'content-type' => 'application/json',
-            ],
-        ];
-
-        $multipart = array_merge($multipart, $this->_files);
-
-        $response = self::getClient()->request('POST', $url, [
-            'multipart' => $multipart,
-        ]);
-
-        return $response->getStatusCode() == 200;
     }
 }
