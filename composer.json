@@ -1,8 +1,8 @@
 {
-    "name": "notify-events/php-send",
+    "name": "notify-events/php",
     "description": "Send message to notify.events service",
     "keywords": ["send"],
-    "homepage": "https://github.com/notify-events/php-send",
+    "homepage": "https://github.com/notify-events/php",
     "type": "extension",
     "license": "MIT",
     "authors": [
@@ -12,8 +12,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/notify-events/php-send/issues",
-        "source": "https://github.com/notify-events/php-send"
+        "issues": "https://github.com/notify-events/php/issues",
+        "source": "https://github.com/notify-events/php"
     },
     "require": {
         "php": ">=5.5",
