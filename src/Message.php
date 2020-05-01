@@ -91,7 +91,7 @@ class Message
                 case self::FILE_TYPE_FILE: {
                     $content  = file_get_contents($file['fileName']);
                     $fileName = basename($file['fileName']);
-                    $mimeType = !empty($file['mimeType']) ? $file['mimeType'] : mime_content_type($file['fileName']);
+                    $mimeType = !empty($file['mimeType']) ? $file['mimeType'] : (extension_loaded('fileinfo') ? mime_content_type($file['fileName']) : 'application/octet-stream');
                 } break;
                 case self::FILE_TYPE_CONTENT: {
                     $content  = $file['content'];
