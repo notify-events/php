@@ -1,6 +1,6 @@
 <?php
 
-namespace notify_events\php_send;
+namespace notify_events\php;
 
 use ErrorException;
 use InvalidArgumentException;
