@@ -62,6 +62,7 @@ class Message
     }
 
     /**
+     * Prepares a param to sending.
      * @param string $boundary
      * @param string $name
      * @param string $content
@@ -76,6 +77,7 @@ class Message
     }
 
     /**
+     * Prepares a boundary param part for file.
      * @param string $boundary
      * @param string $name
      * @param array $files
@@ -118,6 +120,7 @@ class Message
     }
 
     /**
+     * Prepares a boundary param part.
      * @param string $boundary
      * @param string $content
      * @param string[] $headers
@@ -140,6 +143,7 @@ class Message
     }
 
     /**
+     * Sends the message to the specified channel.
      * @param string $channelToken
      * @return void
      * @throws ErrorException
@@ -179,6 +183,7 @@ class Message
     }
 
     /**
+     * Sets the value of the Title property.
      * @param string $title
      * @return $this
      */
@@ -190,6 +195,7 @@ class Message
     }
 
     /**
+     * Returns the value of the Title property.
      * @return string
      */
     public function getTitle()
@@ -198,6 +204,7 @@ class Message
     }
 
     /**
+     * Sets the value of the Content property.
      * @param string $content
      * @return $this
      */
@@ -209,6 +216,7 @@ class Message
     }
 
     /**
+     * Returns the value of the Content property.
      * @return string
      */
     public function getContent()
@@ -217,6 +225,8 @@ class Message
     }
 
     /**
+     * Sets the value of the Priority property.
+     * This method checks that $priority is in the list of available message priorities.
      * @param string $priority
      * @return $this
      */
@@ -238,6 +248,7 @@ class Message
     }
 
     /**
+     * Returns the value of the Priority property.
      * @return string
      */
     public function getPriority()
@@ -246,6 +257,8 @@ class Message
     }
 
     /**
+     * Sets the value of the Level property.
+     * This method checks that $level is in the list of available message levels.
      * @param string $level
      * @return $this
      */
@@ -268,6 +281,7 @@ class Message
     }
 
     /**
+     * Returns the value of the Level property.
      * @return string
      */
     public function getLevel()
@@ -276,15 +290,18 @@ class Message
     }
 
     /**
+     * Adds a new File by filename
+     * to the massage attached files list.
+     * @param string $filePath
      * @param string $fileName
      * @param string|null $mimeType
      * @return $this
      */
-    public function addFile($fileName, $mimeType = null)
+    public function addFile($filePath, $fileName = null, $mimeType = null)
     {
         $this->_files[] = [
             'type'     => self::FILE_TYPE_FILE,
-            'fileName' => basename($fileName),
+            'fileName' => $fileName ?: basename($filePath),
             'mimeType' => $mimeType,
         ];
 
@@ -292,6 +309,8 @@ class Message
     }
 
     /**
+     * Adds a new File by content
+     * to the massage attached files list.
      * @param string $content
      * @param string|null $fileName
      * @param string|null $mimeType
@@ -310,6 +329,8 @@ class Message
     }
 
     /**
+     * Adds a new File by URL
+     * to the massage attached files list.
      * @param string $url
      * @param string|null $fileName
      * @param string|null $mimeType
@@ -328,15 +349,18 @@ class Message
     }
 
     /**
+     * Adds a new Image by filename
+     * to the massage attached images list.
+     * @param string $filePath
      * @param string $fileName
      * @param string|null $mimeType
      * @return $this
      */
-    public function addImage($fileName, $mimeType = null)
+    public function addImage($filePath, $fileName = null, $mimeType = null)
     {
         $this->_images[] = [
             'type'     => self::FILE_TYPE_FILE,
-            'fileName' => basename($fileName),
+            'fileName' => $fileName ?: basename($filePath),
             'mimeType' => $mimeType,
         ];
 
@@ -344,6 +368,8 @@ class Message
     }
 
     /**
+     * Adds a new Image by content
+     * to the massage attached images list.
      * @param string $content
      * @param string|null $fileName
      * @param string|null $mimeType
@@ -362,6 +388,8 @@ class Message
     }
 
     /**
+     * Adds a new Image by URL
+     * to the massage attached images list.
      * @param string $url
      * @param string|null $fileName
      * @param string|null $mimeType
