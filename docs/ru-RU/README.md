@@ -63,4 +63,4 @@ require_once "path/to/notify-events/php/Message.php";
 ?>
 ```
 
-[Список и описание всех доступных функций](/docs/ru-RU/functions.md)
+[Список доступных функций](/docs/ru-RU/Message.md)

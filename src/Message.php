@@ -144,13 +144,13 @@ class Message
 
     /**
      * Sends the message to the specified channel.
-     * @param string $channelToken
+     * @param string $token
      * @return void
      * @throws ErrorException
      */
-    public function send($channelToken)
+    public function send($token)
     {
-        $url = sprintf(self::$_baseUrl, $channelToken);
+        $url = sprintf(self::$_baseUrl, $token);
 
         $boundary = uniqid();
 
