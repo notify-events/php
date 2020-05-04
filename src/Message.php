@@ -47,10 +47,10 @@ class Message
 
     /**
      * Message constructor.
-     * @param string $content
-     * @param string $title
-     * @param string $priority
-     * @param string $level
+     * @param string $content  Message text
+     * @param string $title    Message title
+     * @param string $priority Priority
+     * @param string $level    Level
      */
     public function __construct($content = '', $title = '', $priority = self::PRIORITY_NORMAL, $level = self::LEVEL_INFO)
     {
@@ -144,7 +144,9 @@ class Message
 
     /**
      * Sends the message to the specified channel.
-     * @param string $token
+     * You can get the source token when connecting the PHP source
+     * to your channel on the Notify.Events service side.
+     * @param string $token Source token
      * @return void
      * @throws ErrorException
      */
@@ -184,7 +186,7 @@ class Message
 
     /**
      * Sets the value of the Title property.
-     * @param string $title
+     * @param string $title Message title
      * @return $this
      */
     public function setTitle($title)
@@ -205,7 +207,7 @@ class Message
 
     /**
      * Sets the value of the Content property.
-     * @param string $content
+     * @param string $content Message content
      * @return $this
      */
     public function setContent($content)
@@ -226,8 +228,9 @@ class Message
 
     /**
      * Sets the value of the Priority property.
+     * For recipients which supports priority, the message will be highlighted accordingly.
      * This method checks that $priority is in the list of available message priorities.
-     * @param string $priority
+     * @param string $priority Message priority
      * @return $this
      */
     public function setPriority($priority)
@@ -259,7 +262,8 @@ class Message
     /**
      * Sets the value of the Level property.
      * This method checks that $level is in the list of available message levels.
-     * @param string $level
+     * For recipients which have differences in the display of messages at different levels, this level will be applied.
+     * @param string $level Message Level
      * @return $this
      */
     public function setLevel($level)
@@ -290,11 +294,11 @@ class Message
     }
 
     /**
-     * Adds a new File by filename
+     * Adds a new File by local file path
      * to the massage attached files list.
-     * @param string $filePath
-     * @param string $fileName
-     * @param string|null $mimeType
+     * @param string $filePath Local file path
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addFile($filePath, $fileName = null, $mimeType = null)
@@ -311,9 +315,9 @@ class Message
     /**
      * Adds a new File by content
      * to the massage attached files list.
-     * @param string $content
-     * @param string|null $fileName
-     * @param string|null $mimeType
+     * @param string $content File content
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addFileFromContent($content, $fileName = null, $mimeType = null)
@@ -331,9 +335,9 @@ class Message
     /**
      * Adds a new File by URL
      * to the massage attached files list.
-     * @param string $url
-     * @param string|null $fileName
-     * @param string|null $mimeType
+     * @param string $url File remote URL
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addFileFromUrl($url, $fileName = null, $mimeType = null)
@@ -351,9 +355,9 @@ class Message
     /**
      * Adds a new Image by filename
      * to the massage attached images list.
-     * @param string $filePath
-     * @param string $fileName
-     * @param string|null $mimeType
+     * @param string $filePath Local file path
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addImage($filePath, $fileName = null, $mimeType = null)
@@ -370,9 +374,9 @@ class Message
     /**
      * Adds a new Image by content
      * to the massage attached images list.
-     * @param string $content
-     * @param string|null $fileName
-     * @param string|null $mimeType
+     * @param string $content File content
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addImageFromContent($content, $fileName = null, $mimeType = null)
@@ -390,9 +394,9 @@ class Message
     /**
      * Adds a new Image by URL
      * to the massage attached images list.
-     * @param string $url
-     * @param string|null $fileName
-     * @param string|null $mimeType
+     * @param string $url File remote URL
+     * @param string|null $fileName File name
+     * @param string|null $mimeType File MimeType
      * @return $this
      */
     public function addImageFromUrl($url, $fileName = null, $mimeType = null)

@@ -15,8 +15,6 @@ public function __construct ( ?string $content = '', ?string $title = '', ?strin
 **$level**    | String | Нет | Уровень. Допустимые значения описаны в функции `setLevel`
 
 
-
-
 ## setTitle
 #### Задать заголовок сообщения
 
@@ -27,6 +25,7 @@ public function setTitle ( string $title ): $this
 ---------|-----|--------------|---------
 **$title** | String | Да | Заголовок сообщения
 
+
 ## getTitle
 #### Получить установленный заголовок сообщения
 
@@ -35,12 +34,9 @@ public function getTitle (): string
 ```
 
 
-
-
-
 ## setContent
 #### Задать текст сообщения
-Для получаетелей, которые не поддерживают отображение HTML, теги будут игнорироваться.
+Для получателей, которые не поддерживают отображение HTML, теги будут игнорироваться.
 ```php
 public function setContent ( string $content ): $this
 ```
@@ -48,13 +44,13 @@ public function setContent ( string $content ): $this
 ---------|-----|--------------|---------
 **$content** | String | Да | Текст сообщения. Допустимые HTML-теги: `<b>`, `<i>`, `<a>`, `<br>`
 
+
 ## getContent
 #### Получить установленный текст сообщения
 
 ```php
 public function getContent (): string
 ```
-
 
 
 ## setPriority
@@ -77,13 +73,13 @@ Message::PRIORITY_HIGH    - Высокий
 Message::PRIORITY_HIGHEST - Критичный 
 ```
 
+
 ## getPriority
 #### Получить установленный приоритет сообщения
 
 ```php
 public function getPriority (): string
 ```
-
 
 
 ## setLevel
@@ -107,6 +103,7 @@ Message::LEVEL_ERROR   - Ошибка
 Message::LEVEL_SUCCESS - Успешно
 ```
 
+
 ## getLevel
 #### Получить установленный уровень сообщения
 
@@ -127,6 +124,7 @@ public function addFile ( string $filePath, ?string $mimeType = null, ?string $f
 **$mimeType** | String | Нет | MimeType файла
 **$fileName** | String | Нет | Название файла с расширением
 
+
 ## addFileFromContent
 #### Прикрепить файл, передав его содержимое
 
@@ -138,6 +136,7 @@ public function addFileFromContent ( string $content, ?string $fileName = null, 
 **$content**  | String | Да | Содержимое файла
 **$fileName** | String | Нет | Название файла с расширением
 **$mimeType** | String | Нет | MimeType файла
+
 
 ## addFileFromUrl
 #### Прикрепить файл, расположенный по указанному URL
@@ -151,6 +150,7 @@ public function addFileFromUrl ( string $url, ?string $fileName = null, ?string 
 **$fileName** | String | Нет | Название файла с расширением
 **$mimeType** | String | Нет | MimeType файла
 
+
 ## addImage
 #### Прикрепить локальное изображение
 
@@ -163,6 +163,7 @@ public function addImage ( string $filePath, ?string $mimeType = null, ?string $
 **$mimeType** | String | Нет | MimeType файла
 **$fileName** | String | Нет | Название файла с расширением
 
+
 ## addImageFromContent
 #### Прикрепить изображение, передав его содержимое
 
@@ -174,6 +175,7 @@ public function addFileFromContent ( string $content, ?string $fileName = null, 
 **$content**  | String | Да | Содержимое файла
 **$fileName** | String | Нет | Название файла с расширением
 **$mimeType** | String | Нет | MimeType файла
+
 
 ## addImageFromUrl
 #### Прикрепить файл, расположенный по указанному URL

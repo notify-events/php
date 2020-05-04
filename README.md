@@ -63,4 +63,4 @@ After that, you can create a message object, set the necessary parameters and se
 ?>
 ```
 
-[List and description of all available functions](/docs/en-US/functions.md)
+[List of all available functions](/docs/en-US/Message.md)
