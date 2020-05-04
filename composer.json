@@ -1,7 +1,7 @@
 {
     "name": "notify-events/php",
-    "description": "Send message to notify.events service",
-    "keywords": ["send"],
+    "description": "PHP extension to integrate your project with Notify.Events service.",
+    "keywords": ["notification", "alert", "teams", "viber", "telegram", "slack", "sms", "voice", "call"],
     "homepage": "https://github.com/notify-events/php",
     "type": "extension",
     "license": "MIT",

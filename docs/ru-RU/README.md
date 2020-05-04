@@ -19,7 +19,7 @@ php composer.phar require --prefer-dist notify-events/php
 либо добавьте
 
 ```
-"notify-events/php": "dev-master"
+"notify-events/php": "~1.0"
 ```
 
 в секцию require вашего composer.json файла. 
