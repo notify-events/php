@@ -47,6 +47,7 @@ class Message
 
     /**
      * Message constructor.
+     *
      * @param string $content  Message text
      * @param string $title    Message title
      * @param string $priority Priority
@@ -63,6 +64,7 @@ class Message
 
     /**
      * Prepares a param to sending.
+     *
      * @param string $boundary
      * @param string $name
      * @param string $content
@@ -78,9 +80,10 @@ class Message
 
     /**
      * Prepares a boundary param part for file.
+     *
      * @param string $boundary
      * @param string $name
-     * @param array $files
+     * @param array  $files
      * @return string
      * @throws ErrorException
      */
@@ -121,8 +124,9 @@ class Message
 
     /**
      * Prepares a boundary param part.
-     * @param string $boundary
-     * @param string $content
+     *
+     * @param string   $boundary
+     * @param string   $content
      * @param string[] $headers
      * @return string
      */
@@ -146,6 +150,7 @@ class Message
      * Sends the message to the specified channel.
      * You can get the source token when connecting the PHP source
      * to your channel on the Notify.Events service side.
+     *
      * @param string $token Source token
      * @return void
      * @throws ErrorException
@@ -186,6 +191,7 @@ class Message
 
     /**
      * Sets the value of the Title property.
+     *
      * @param string $title Message title
      * @return $this
      */
@@ -198,6 +204,7 @@ class Message
 
     /**
      * Returns the value of the Title property.
+     *
      * @return string
      */
     public function getTitle()
@@ -207,6 +214,7 @@ class Message
 
     /**
      * Sets the value of the Content property.
+     *
      * @param string $content Message content
      * @return $this
      */
@@ -219,6 +227,7 @@ class Message
 
     /**
      * Returns the value of the Content property.
+     *
      * @return string
      */
     public function getContent()
@@ -230,6 +239,7 @@ class Message
      * Sets the value of the Priority property.
      * For recipients which supports priority, the message will be highlighted accordingly.
      * This method checks that $priority is in the list of available message priorities.
+     *
      * @param string $priority Message priority
      * @return $this
      */
@@ -252,6 +262,7 @@ class Message
 
     /**
      * Returns the value of the Priority property.
+     *
      * @return string
      */
     public function getPriority()
@@ -263,6 +274,7 @@ class Message
      * Sets the value of the Level property.
      * This method checks that $level is in the list of available message levels.
      * For recipients which have differences in the display of messages at different levels, this level will be applied.
+     *
      * @param string $level Message Level
      * @return $this
      */
@@ -286,6 +298,7 @@ class Message
 
     /**
      * Returns the value of the Level property.
+     *
      * @return string
      */
     public function getLevel()
@@ -296,9 +309,10 @@ class Message
     /**
      * Adds a new File by local file path
      * to the massage attached files list.
-     * @param string $filePath Local file path
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $filePath Local file path
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addFile($filePath, $fileName = null, $mimeType = null)
@@ -315,9 +329,10 @@ class Message
     /**
      * Adds a new File by content
      * to the massage attached files list.
-     * @param string $content File content
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $content  File content
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addFileFromContent($content, $fileName = null, $mimeType = null)
@@ -335,9 +350,10 @@ class Message
     /**
      * Adds a new File by URL
      * to the massage attached files list.
-     * @param string $url File remote URL
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $url      File remote URL
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addFileFromUrl($url, $fileName = null, $mimeType = null)
@@ -355,9 +371,10 @@ class Message
     /**
      * Adds a new Image by filename
      * to the massage attached images list.
-     * @param string $filePath Local file path
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $filePath Local file path
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addImage($filePath, $fileName = null, $mimeType = null)
@@ -374,9 +391,10 @@ class Message
     /**
      * Adds a new Image by content
      * to the massage attached images list.
-     * @param string $content File content
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $content  File content
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addImageFromContent($content, $fileName = null, $mimeType = null)
@@ -394,9 +412,10 @@ class Message
     /**
      * Adds a new Image by URL
      * to the massage attached images list.
-     * @param string $url File remote URL
-     * @param string|null $fileName File name
-     * @param string|null $mimeType File MimeType
+     *
+     * @param string      $url      File remote URL
+     * @param string|null $fileName Attachment file name
+     * @param string|null $mimeType Attachment file MimeType
      * @return $this
      */
     public function addImageFromUrl($url, $fileName = null, $mimeType = null)

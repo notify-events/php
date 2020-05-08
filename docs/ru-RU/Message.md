@@ -168,7 +168,7 @@ public function addImage ( string $filePath, ?string $mimeType = null, ?string $
 #### Прикрепить изображение, передав его содержимое
 
 ```php
-public function addFileFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
+public function addImageFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
 Параметр | Тип | Обязательный | Описание
 ---------|-----|--------------|---------
@@ -181,7 +181,7 @@ public function addFileFromContent ( string $content, ?string $fileName = null, 
 #### Прикрепить файл, расположенный по указанному URL
 
 ```php
-public function addFileFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
+public function addImageFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
 Параметр | Тип | Обязательный | Описание
 ---------|-----|--------------|---------

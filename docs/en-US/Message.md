@@ -168,7 +168,7 @@ Param | Type | Required | Description
 #### Attach image by content
 
 ```php
-public function addFileFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
+public function addImageFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
 Param | Type | Required | Description
 ------|------|----------|------------
@@ -181,7 +181,7 @@ Param | Type | Required | Description
 #### Attach remote image
 
 ```php
-public function addFileFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
+public function addImageFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
 Param | Type | Required | Description
 ------|------|----------|------------
