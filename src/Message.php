@@ -308,7 +308,7 @@ class Message
 
     /**
      * Adds a new File by local file path
-     * to the massage attached files list.
+     * to the message attached files list.
      *
      * @param string      $filePath Local file path
      * @param string|null $fileName Attachment file name
@@ -328,7 +328,7 @@ class Message
 
     /**
      * Adds a new File by content
-     * to the massage attached files list.
+     * to the message attached files list.
      *
      * @param string      $content  File content
      * @param string|null $fileName Attachment file name
@@ -349,7 +349,7 @@ class Message
 
     /**
      * Adds a new File by URL
-     * to the massage attached files list.
+     * to the message attached files list.
      *
      * @param string      $url      File remote URL
      * @param string|null $fileName Attachment file name
@@ -370,7 +370,7 @@ class Message
 
     /**
      * Adds a new Image by filename
-     * to the massage attached images list.
+     * to the message attached images list.
      *
      * @param string      $filePath Local file path
      * @param string|null $fileName Attachment file name
@@ -390,7 +390,7 @@ class Message
 
     /**
      * Adds a new Image by content
-     * to the massage attached images list.
+     * to the message attached images list.
      *
      * @param string      $content  File content
      * @param string|null $fileName Attachment file name
@@ -411,7 +411,7 @@ class Message
 
     /**
      * Adds a new Image by URL
-     * to the massage attached images list.
+     * to the message attached images list.
      *
      * @param string      $url      File remote URL
      * @param string|null $fileName Attachment file name
