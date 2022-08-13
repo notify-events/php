@@ -7,13 +7,12 @@
 ```php
 public function __construct ( ?string $content = '', ?string $title = '', ?string $priority = Message::PRIORITY_NORMAL, ?string $level = Message::LEVEL_INFO )
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$content**  | String | No | Message text
-**$title**    | String | No | Message title
-**$priority** | String | No | Priority. Available values are listed in the `setPriority` function
-**$level**    | String | No | Level. Available values are listed in the `setLevel` function
-
+| Param         | Type   | Required | Description                                                         |
+|---------------|--------|----------|---------------------------------------------------------------------|
+| **$content**  | String | No       | Message text                                                        |
+| **$title**    | String | No       | Message title                                                       |
+| **$priority** | String | No       | Priority. Available values are listed in the `setPriority` function |
+| **$level**    | String | No       | Level. Available values are listed in the `setLevel` function       |
 
 ## setTitle
 #### Set message title
@@ -21,10 +20,9 @@ Param | Type | Required | Description
 ```php
 public function setTitle ( string $title ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$title** | String | Yes | Message title
-
+| Param      | Type   | Required | Description   |
+|------------|--------|----------|---------------|
+| **$title** | String | Yes      | Message title |
 
 ## getTitle
 #### Get message title
@@ -40,10 +38,9 @@ For recipients that do not support HTML, these tags will be ignored.
 ```php
 public function setContent ( string $content ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$content** | String | Yes | Message text. Available HTML tags: `<b>`, `<i>`, `<a>`, `<br>`
-
+| Param        | Type   | Required | Description                                                            |
+|--------------|--------|----------|------------------------------------------------------------------------|
+| **$content** | String | Yes      | Message text. Available HTML tags: `<b>`, `<i>`, `<a href="">`, `<br>` |
 
 ## getContent
 #### Get message text
@@ -60,9 +57,9 @@ For recipients which supports priority, the message will be highlighted accordin
 ```php
 public function setPriority ( string $priority ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$priority** | String | Yes | Message priority
+| Param         | Type   | Required | Description      |
+|---------------|--------|----------|------------------|
+| **$priority** | String | Yes      | Message priority |
 
 Available values:
 ```php
@@ -89,9 +86,9 @@ For recipients which have differences in the display of messages at different le
 ```php
 public function setLevel ( string $level ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$level** | String | Yes | Message level
+| Param      | Type   | Required | Description   |
+|------------|--------|----------|---------------|
+| **$level** | String | Yes      | Message level |
 
 Available values:
 ```php
@@ -118,12 +115,11 @@ public function getLevel (): string
 ```php
 public function addFile ( string $filePath, ?string $mimeType = null, ?string $fileName = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$filePath** | String | Yes | Local file path
-**$mimeType** | String | No | File MimeType
-**$fileName** | String | No | File name and extension
-
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$filePath** | String | Yes      | Local file path         |
+| **$mimeType** | String | No       | File MimeType           |
+| **$fileName** | String | No       | File name and extension |
 
 ## addFileFromContent
 #### Attach file by content
@@ -131,12 +127,11 @@ Param | Type | Required | Description
 ```php
 public function addFileFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$content**  | String | Yes | File content
-**$fileName** | String | No | File name and extension
-**$mimeType** | String | No | File MimeType
-
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$content**  | String | Yes      | File content            |
+| **$fileName** | String | No       | File name and extension |
+| **$mimeType** | String | No       | File MimeType           |
 
 ## addFileFromUrl
 #### Attach remote file
@@ -144,12 +139,11 @@ Param | Type | Required | Description
 ```php
 public function addFileFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$url**      | String | Yes | Remote file path
-**$fileName** | String | No | File name and extension
-**$mimeType** | String | No | File MimeType
-
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$url**      | String | Yes      | Remote file path        |
+| **$fileName** | String | No       | File name and extension |
+| **$mimeType** | String | No       | File MimeType           |
 
 ## addImage
 #### Attach local image
@@ -157,12 +151,11 @@ Param | Type | Required | Description
 ```php
 public function addImage ( string $filePath, ?string $mimeType = null, ?string $fileName = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$filePath** | String | Yes | Local file path
-**$mimeType** | String | No | File MimeType
-**$fileName** | String | No | File name and extension
-
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$filePath** | String | Yes      | Local file path         |
+| **$mimeType** | String | No       | File MimeType           |
+| **$fileName** | String | No       | File name and extension |
 
 ## addImageFromContent
 #### Attach image by content
@@ -170,12 +163,11 @@ Param | Type | Required | Description
 ```php
 public function addImageFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$content**  | String | Yes | File content
-**$fileName** | String | No | File name and extension
-**$mimeType** | String | No | File MimeType
-
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$content**  | String | Yes      | File content            |
+| **$fileName** | String | No       | File name and extension |
+| **$mimeType** | String | No       | File MimeType           |
 
 ## addImageFromUrl
 #### Attach remote image
@@ -183,12 +175,38 @@ Param | Type | Required | Description
 ```php
 public function addImageFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$url**      | String | Yes | Remote file path
-**$fileName** | String | No | File name and extension
-**$mimeType** | String | No | File MimeType
+| Param         | Type   | Required | Description             |
+|---------------|--------|----------|-------------------------|
+| **$url**      | String | Yes      | Remote file path        |
+| **$fileName** | String | No       | File name and extension |
+| **$mimeType** | String | No       | File MimeType           |
 
+
+## addAction
+#### Attach action with callback
+
+```php
+public function addAction ( string $name, string $title, ?string $callback_url = null, string $callback_method = 'get', array $callback_headers = [], string $callback_content = '' )
+```
+
+| Param                 | Type   | Required | Description                                     |
+|-----------------------|--------|----------|-------------------------------------------------|
+| **$name**             | String | Yes      | Action name                                     |
+| **$title**            | String | Yes      | Action (button) title                           |
+| **$callback_url**     | String | No       | Callback URL                                    |
+| **$callback_method**  | String | No       | Callback method                                 |
+| **$callback_headers** | Array  | No       | Callback headers (key: value)                   |
+| **$callback_content** | String | No       | Callback content (for POST, PUT, PATCH methods) |
+
+Available values for $callback_method:
+```php
+Message::CALLBACK_METHOD_HRAD   - HEAD
+Message::CALLBACK_METHOD_GET    - GET
+Message::CALLBACK_METHOD_POST   - POST
+Message::CALLBACK_METHOD_PUT    - PUT
+Message::CALLBACK_METHOD_PATCH  - PATCH
+Message::CALLBACK_METHOD_DELETE - DELETE
+```
 
 ## send
 #### Send the message
@@ -196,8 +214,8 @@ Param | Type | Required | Description
 You can get the source token when connecting the PHP source to your channel on the [Notify.Events](https://notify.events) service side.
 
 ```php
-public function send ( $token )
+public function send ( string $token )
 ```
-Param | Type | Required | Description
-------|------|----------|------------
-**$token** | String | Yes | Source token
+| Param      | Type   | Required | Description  |
+|------------|--------|----------|--------------|
+| **$token** | String | Yes      | Source token |

@@ -24,6 +24,7 @@
         "ext-json": "*"
     },
     "suggest": {
+        "ext-curl": "For sending via Curl",
         "ext-fileinfo": "Autodetect mime-type for file/image uploads"
     },
     "autoload": {
