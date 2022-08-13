@@ -7,13 +7,12 @@
 ```php
 public function __construct ( ?string $content = '', ?string $title = '', ?string $priority = Message::PRIORITY_NORMAL, ?string $level = Message::LEVEL_INFO )
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$content**  | String | Нет | Текст сообщения
-**$title**    | String | Нет | Заголовок сообщения
-**$priority** | String | Нет | Приоритет. Допустимые значения описаны в функции `setPriority`
-**$level**    | String | Нет | Уровень. Допустимые значения описаны в функции `setLevel`
-
+| Параметр      | Тип    | Обязательный | Описание                                                       |
+|---------------|--------|--------------|----------------------------------------------------------------|
+| **$content**  | String | Нет          | Текст сообщения                                                |
+| **$title**    | String | Нет          | Заголовок сообщения                                            |
+| **$priority** | String | Нет          | Приоритет. Допустимые значения описаны в функции `setPriority` |
+| **$level**    | String | Нет          | Уровень. Допустимые значения описаны в функции `setLevel`      |
 
 ## setTitle
 #### Задать заголовок сообщения
@@ -21,10 +20,9 @@ public function __construct ( ?string $content = '', ?string $title = '', ?strin
 ```php
 public function setTitle ( string $title ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$title** | String | Да | Заголовок сообщения
-
+| Параметр   | Тип    | Обязательный | Описание            |
+|------------|--------|--------------|---------------------|
+| **$title** | String | Да           | Заголовок сообщения |
 
 ## getTitle
 #### Получить установленный заголовок сообщения
@@ -40,10 +38,9 @@ public function getTitle (): string
 ```php
 public function setContent ( string $content ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$content** | String | Да | Текст сообщения. Допустимые HTML-теги: `<b>`, `<i>`, `<a>`, `<br>`
-
+| Параметр     | Тип    | Обязательный | Описание                                                                   |
+|--------------|--------|--------------|----------------------------------------------------------------------------|
+| **$content** | String | Да           | Текст сообщения. Допустимые HTML-теги: `<b>`, `<i>`, `<a href="">`, `<br>` |
 
 ## getContent
 #### Получить установленный текст сообщения
@@ -60,9 +57,9 @@ public function getContent (): string
 ```php
 public function setPriority ( string $priority ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$priority** | String | Да | Приоритет сообщения
+| Параметр      | Тип    | Обязательный | Описание            |
+|---------------|--------|--------------|---------------------|
+| **$priority** | String | Да           | Приоритет сообщения |
 
 Список возможных значений:
 ```php
@@ -89,9 +86,9 @@ public function getPriority (): string
 ```php
 public function setLevel ( string $level ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$level** | String | Да | Уровень сообщения
+| Параметр   | Тип    | Обязательный | Описание          |
+|------------|--------|--------------|-------------------|
+| **$level** | String | Да           | Уровень сообщения |
 
 Список возможных значений:
 ```php
@@ -118,12 +115,11 @@ public function getLevel (): string
 ```php
 public function addFile ( string $filePath, ?string $mimeType = null, ?string $fileName = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$filePath** | String | Да | Путь к локальному файлу
-**$mimeType** | String | Нет | MimeType файла
-**$fileName** | String | Нет | Название файла с расширением
-
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$filePath** | String | Да           | Путь к локальному файлу      |
+| **$mimeType** | String | Нет          | MimeType файла               |
+| **$fileName** | String | Нет          | Название файла с расширением |
 
 ## addFileFromContent
 #### Прикрепить файл, передав его содержимое
@@ -131,12 +127,11 @@ public function addFile ( string $filePath, ?string $mimeType = null, ?string $f
 ```php
 public function addFileFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$content**  | String | Да | Содержимое файла
-**$fileName** | String | Нет | Название файла с расширением
-**$mimeType** | String | Нет | MimeType файла
-
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$content**  | String | Да           | Содержимое файла             |
+| **$fileName** | String | Нет          | Название файла с расширением |
+| **$mimeType** | String | Нет          | MimeType файла               |
 
 ## addFileFromUrl
 #### Прикрепить файл, расположенный по указанному URL
@@ -144,12 +139,11 @@ public function addFileFromContent ( string $content, ?string $fileName = null, 
 ```php
 public function addFileFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$url**      | String | Да | Путь к удалённому файлу
-**$fileName** | String | Нет | Название файла с расширением
-**$mimeType** | String | Нет | MimeType файла
-
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$url**      | String | Да           | Путь к удалённому файлу      |
+| **$fileName** | String | Нет          | Название файла с расширением |
+| **$mimeType** | String | Нет          | MimeType файла               |
 
 ## addImage
 #### Прикрепить локальное изображение
@@ -157,12 +151,11 @@ public function addFileFromUrl ( string $url, ?string $fileName = null, ?string 
 ```php
 public function addImage ( string $filePath, ?string $mimeType = null, ?string $fileName = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$filePath** | String | Да | Путь к локальному файлу
-**$mimeType** | String | Нет | MimeType файла
-**$fileName** | String | Нет | Название файла с расширением
-
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$filePath** | String | Да           | Путь к локальному файлу      |
+| **$mimeType** | String | Нет          | MimeType файла               |
+| **$fileName** | String | Нет          | Название файла с расширением |
 
 ## addImageFromContent
 #### Прикрепить изображение, передав его содержимое
@@ -170,12 +163,11 @@ public function addImage ( string $filePath, ?string $mimeType = null, ?string $
 ```php
 public function addImageFromContent ( string $content, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$content**  | String | Да | Содержимое файла
-**$fileName** | String | Нет | Название файла с расширением
-**$mimeType** | String | Нет | MimeType файла
-
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$content**  | String | Да           | Содержимое файла             |
+| **$fileName** | String | Нет          | Название файла с расширением |
+| **$mimeType** | String | Нет          | MimeType файла               |
 
 ## addImageFromUrl
 #### Прикрепить файл, расположенный по указанному URL
@@ -183,12 +175,37 @@ public function addImageFromContent ( string $content, ?string $fileName = null,
 ```php
 public function addImageFromUrl ( string $url, ?string $fileName = null, ?string $mimeType = null ): $this
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$url**      | String | Да | Путь к удалённому файлу
-**$fileName** | String | Нет | Название файла с расширением
-**$mimeType** | String | Нет | MimeType файла
+| Параметр      | Тип    | Обязательный | Описание                     |
+|---------------|--------|--------------|------------------------------|
+| **$url**      | String | Да           | Путь к удалённому файлу      |
+| **$fileName** | String | Нет          | Название файла с расширением |
+| **$mimeType** | String | Нет          | MimeType файла               |
 
+## addAction
+#### Добавить действие с обратным вызовом
+
+```php
+public function addAction ( string $name, string $title, ?string $callback_url = null, string $callback_method = 'get', array $callback_headers = [], string $callback_content = '' )
+```
+ 
+| Параметр              | Тип    | Обязательный | Описание                                                    |
+|-----------------------|--------|--------------|-------------------------------------------------------------|
+| **$name**             | String | Да           | Имя действия                                                |
+| **$title**            | String | Да           | Название действия (кнопки)                                  |
+| **$callback_url**     | String | Нет          | URL Обратного вызова                                        |
+| **$callback_method**  | String | Нет          | Метод обратного вызова                                      |
+| **$callback_headers** | Array  | Нет          | Заголовки обратного вызова (key: value)                     |
+| **$callback_content** | String | Нет          | Содержание обратного вызова (для POST, PUT, PATCH запросов) |
+
+Список возможных значений для $callback_method:
+```php
+Message::CALLBACK_METHOD_HRAD   - HEAD
+Message::CALLBACK_METHOD_GET    - GET
+Message::CALLBACK_METHOD_POST   - POST
+Message::CALLBACK_METHOD_PUT    - PUT
+Message::CALLBACK_METHOD_PATCH  - PATCH
+Message::CALLBACK_METHOD_DELETE - DELETE
+```
 
 ## send
 #### Отправить сообщение
@@ -196,8 +213,8 @@ public function addImageFromUrl ( string $url, ?string $fileName = null, ?string
 Токен источника вы можете получить при поключении источника PHP на ваш канал на стороне сервиса [Notify.Events](https://notify.events).
 
 ```php
-public function send ( $token )
+public function send ( string $token )
 ```
-Параметр | Тип | Обязательный | Описание
----------|-----|--------------|---------
-**$token** | String | Да | Токен источника
+| Параметр   | Тип    | Обязательный | Описание        |
+|------------|--------|--------------|-----------------|
+| **$token** | String | Да           | Токен источника |

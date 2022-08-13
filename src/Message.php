@@ -24,6 +24,13 @@ class Message
     const LEVEL_ERROR   = 'error';
     const LEVEL_SUCCESS = 'success';
 
+    const CALLBACK_METHOD_HEAD   = 'head';
+    const CALLBACK_METHOD_GET    = 'get';
+    const CALLBACK_METHOD_POST   = 'post';
+    const CALLBACK_METHOD_PUT    = 'put';
+    const CALLBACK_METHOD_PATCH  = 'patch';
+    const CALLBACK_METHOD_DELETE = 'delete';
+
     /** @var string */
     protected static $_baseUrl = 'https://notify.events/api/v1/channel/source/%s/execute';
 
@@ -44,6 +51,8 @@ class Message
     protected $_files = [];
     /** @var array */
     protected $_images = [];
+    /** @var array */
+    protected $_actions = [];
 
     /**
      * Message constructor.
@@ -147,6 +156,32 @@ class Message
     }
 
     /**
+     * @return bool
+     */
+    protected static function capabilityCheckFOpen()
+    {
+        return ini_get('allow_url_fopen') == '1';
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function capabilityCheckCurl()
+    {
+        return function_exists('curl_init');
+    }
+
+    /**
+     * Capability check.
+     *
+     * @return bool
+     */
+    public static function capabilityCheck()
+    {
+        return static::capabilityCheckFOpen() || static::capabilityCheckCurl();
+    }
+
+    /**
      * Sends the message to the specified channel.
      * You can get the source token when connecting the PHP source
      * to your channel on the Notify.Events service side.
@@ -176,17 +211,43 @@ class Message
 
         $content .= '--' . $boundary . '--';
 
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'POST',
-                'header' =>
-                    'Content-Type: multipart/form-data; boundary="' . $boundary . '"' . PHP_EOL .
-                    'Content-Length: ' . strlen($content) . PHP_EOL,
-                'content' => $content,
-            ],
-        ]);
+        if (static::capabilityCheckFOpen()) {
 
-        file_get_contents($url, false, $context);
+            $context = stream_context_create([
+                'http' => [
+                    'method' => 'POST',
+                    'header' =>
+                        'Content-Type: multipart/form-data; boundary="' . $boundary . '"' . PHP_EOL .
+                        'Content-Length: ' . strlen($content) . PHP_EOL,
+                    'content' => $content,
+                ],
+            ]);
+
+            file_get_contents($url, false, $context);
+
+        } elseif (static::capabilityCheckCurl()) {
+
+            static $curl;
+
+            if ($curl === null) {
+                $curl = curl_init();
+            }
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $url,
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: multipart/form-data; boundary="' . $boundary . '"',
+                    'Content-Length: ' . strlen($content),
+                ],
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $content,
+            ]);
+
+            curl_exec($curl);
+
+        } else {
+            throw new ErrorException('Can\'t detect capability method for sending!');
+        }
     }
 
     /**
@@ -425,6 +486,40 @@ class Message
             'url'      => $url,
             'fileName' => $fileName,
             'mimeType' => $mimeType,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $title
+     * @param string|null $callback_url
+     * @param string $callback_method
+     * @param array $callback_headers
+     * @param string $callback_content
+     * @return $this
+     */
+    public function addAction($name, $title, $callback_url = null, $callback_method = 'get', $callback_headers = [], $callback_content = '')
+    {
+        if (!in_array($callback_method, [
+            self::CALLBACK_METHOD_HEAD,
+            self::CALLBACK_METHOD_GET,
+            self::CALLBACK_METHOD_POST,
+            self::CALLBACK_METHOD_PUT,
+            self::CALLBACK_METHOD_PATCH,
+            self::CALLBACK_METHOD_DELETE,
+        ])) {
+            throw new InvalidArgumentException('Invalid callback_method value');
+        }
+
+        $this->_actions[] = [
+            'name'             => $name,
+            'title'            => $title,
+            'callback_url'     => $callback_url,
+            'callback_method'  => $callback_method,
+            'callback_headers' => $callback_headers,
+            'callback_content' => $callback_content,
         ];
 
         return $this;
