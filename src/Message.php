@@ -11,6 +11,8 @@ use InvalidArgumentException;
  */
 class Message
 {
+    const CRLF = "\r\n";
+
     const PRIORITY_LOWEST  = 'lowest';
     const PRIORITY_LOW     = 'low';
     const PRIORITY_NORMAL  = 'normal';
@@ -143,14 +145,14 @@ class Message
     {
         $headers['Content-Length'] = strlen($content);
 
-        $result = '--' . $boundary . PHP_EOL;
+        $result = '--' . $boundary . self::CRLF;
 
         foreach ($headers as $key => $value) {
-            $result .= $key . ': ' . $value . PHP_EOL;
+            $result .= $key . ': ' . $value . self::CRLF;
         }
 
-        $result .= PHP_EOL;
-        $result .= $content . PHP_EOL;
+        $result .= self::CRLF;
+        $result .= $content . self::CRLF;
 
         return $result;
     }
@@ -209,7 +211,7 @@ class Message
         $content .= self::boundaryFiles($boundary, 'files', $this->_files);
         $content .= self::boundaryFiles($boundary, 'images', $this->_images);
 
-        $content .= '--' . $boundary . '--';
+        $content .= '--' . $boundary . '--' . self::CRLF;
 
         if (static::capabilityCheckFOpen()) {
 
@@ -217,8 +219,8 @@ class Message
                 'http' => [
                     'method' => 'POST',
                     'header' =>
-                        'Content-Type: multipart/form-data; boundary="' . $boundary . '"' . PHP_EOL .
-                        'Content-Length: ' . strlen($content) . PHP_EOL,
+                        'Content-Type: multipart/form-data; boundary="' . $boundary . '"' . self::CRLF .
+                        'Content-Length: ' . strlen($content) . self::CRLF,
                     'content' => $content,
                 ],
             ]);

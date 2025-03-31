@@ -1,7 +1,7 @@
 {
     "name": "notify-events/php",
     "description": "PHP extension to integrate your project with Notify.Events service.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "keywords": ["notification", "alert", "teams", "viber", "telegram", "slack", "sms", "voice", "call"],
     "homepage": "https://github.com/notify-events/php",
     "type": "extension",
